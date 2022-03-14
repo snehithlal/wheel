@@ -2,10 +2,10 @@ import React from "react";
 
 import Item from "./Item";
 
-const Items = ({ notes, fetchNotes }) => (
+const Items = ({ notes, editHandler }) => (
   <>
     {notes.map(note => (
-      <Item key={note.id} fetchNotes={fetchNotes} note={note} />
+      <Item key={note.id} note={note} editHandler={editHandler} />
     ))}
   </>
 );

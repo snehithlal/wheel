@@ -4,8 +4,9 @@ import { Typography, Dropdown, Tag, Tooltip, Avatar } from "@bigbinary/neetoui";
 import { MenuVertical } from "neetoicons";
 
 import StatusText from "./StatusText";
+import { randomStatus } from "./utils";
 
-const Item = ({ note }) => (
+const Item = ({ note, editHandler }) => (
   <div className="neeto-ui-shadow-s mb-4 border p-4">
     <div className="flex justify-between border-b">
       <div>
@@ -18,7 +19,7 @@ const Item = ({ note }) => (
         </Typography>
       </div>
       <Dropdown buttonStyle="text" position="bottom-end" icon={MenuVertical}>
-        <li>Edit</li>
+        <li onClick={() => editHandler(note)}>Edit</li>
         <li>Delete</li>
       </Dropdown>
     </div>
@@ -30,7 +31,7 @@ const Item = ({ note }) => (
       />
       <div className="flex items-center">
         <Tooltip position="bottom-end" content="Wednesday, 10:30AM">
-          <StatusText status={"Drafted"} />
+          <StatusText status={randomStatus()} />
         </Tooltip>
         <Avatar
           size="small"

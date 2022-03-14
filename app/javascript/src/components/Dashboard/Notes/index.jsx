@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 import EmptyNotesListImage from "images/EmptyNotesList";
-import { Delete } from "neetoicons";
 import { Button, PageLoader } from "neetoui";
-import { Container, Header, SubHeader } from "neetoui/layouts";
+import { Container, Header } from "neetoui/layouts";
 
 import notesApi from "apis/notes";
 import EmptyState from "components/Common/EmptyState";
@@ -12,6 +11,7 @@ import DeleteAlert from "./DeleteAlert";
 import Items from "./Items";
 import Menubar from "./Menubar";
 import NewNotePane from "./Pane/Create";
+import EditNotePane from "./Pane/Edit";
 
 const Notes = () => {
   const [loading, setLoading] = useState(true);
@@ -20,6 +20,8 @@ const Notes = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedNoteIds, setSelectedNoteIds] = useState([]);
   const [notes, setNotes] = useState([]);
+  const [showEditNote, setShowEditNote] = useState(false);
+  const [selectedNote, setSelectedNote] = useState({});
 
   useEffect(() => {
     fetchNotes();
@@ -35,6 +37,11 @@ const Notes = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const editHandler = note => {
+    setSelectedNote(note);
+    setShowEditNote(true);
   };
 
   if (loading) {
@@ -60,19 +67,7 @@ const Notes = () => {
           }}
         />
         {notes.length ? (
-          <>
-            <SubHeader
-              rightActionBlock={
-                <Button
-                  label="Delete"
-                  icon={Delete}
-                  onClick={() => setShowDeleteAlert(true)}
-                  disabled={!selectedNoteIds.length}
-                />
-              }
-            />
-            <Items notes={notes} fetchNotes={fetchNotes} />
-          </>
+          <Items notes={notes} editHandler={editHandler} />
         ) : (
           <EmptyState
             image={EmptyNotesListImage}
@@ -86,6 +81,12 @@ const Notes = () => {
           showPane={showNewNotePane}
           setShowPane={setShowNewNotePane}
           fetchNotes={fetchNotes}
+        />
+        <EditNotePane
+          showPane={showEditNote}
+          setShowPane={setShowEditNote}
+          fetchNotes={fetchNotes}
+          note={selectedNote}
         />
         {showDeleteAlert && (
           <DeleteAlert
