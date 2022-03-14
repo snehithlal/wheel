@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 
 import { Formik, Form } from "formik";
+import { Check } from "neetoicons";
 import { Button, Pane } from "neetoui";
-import { Input, Textarea } from "neetoui/formik";
+import { Input, Textarea, Select } from "neetoui/formik";
 
 import notesApi from "apis/notes";
+
+import { ASSIGNED_CONTACT_OPTIONS, TAG_OPTIONS } from "./constants";
 
 import { NOTES_FORM_VALIDATION_SCHEMA } from "../constants";
 
@@ -43,14 +46,32 @@ export default function NoteForm({ onClose, refetch, note, isEdit }) {
               required
             />
             <Textarea
+              required
               label="Description"
               name="description"
               className="w-full flex-grow-0"
               rows={8}
+            />
+            <Select
               required
+              isMulti
+              label="Assigned Contact"
+              name="assigned_contacts"
+              placeholder="Select Role"
+              className="w-full flex-grow-0"
+              options={ASSIGNED_CONTACT_OPTIONS}
+            />
+            <Select
+              required
+              isMulti
+              label="Tags"
+              name="tags"
+              placeholder="Select Role"
+              className="w-full flex-grow-0"
+              options={TAG_OPTIONS}
             />
           </Pane.Body>
-          <Pane.Footer>
+          <Pane.Footer className="border-t">
             <Button
               type="submit"
               label={isEdit ? "Update" : "Save Changes"}
@@ -60,6 +81,7 @@ export default function NoteForm({ onClose, refetch, note, isEdit }) {
               disabled={isSubmitting}
               loading={isSubmitting}
               onClick={() => setSubmitted(true)}
+              icon={Check}
             />
             <Button
               onClick={onClose}
