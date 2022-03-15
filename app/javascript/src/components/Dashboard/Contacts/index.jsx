@@ -13,7 +13,7 @@ const Contacts = () => {
   const [showMenubar, setShowMenuBar] = useState(true);
   const [contacts, setContacts] = useState(CONTACTS);
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
-  const [selectedContactId, setSelectedContactId] = useState();
+  const [selectedContactId, setSelectedContactId] = useState(0);
 
   const deleteHandler = id => {
     setSelectedContactId(id);

@@ -17,7 +17,7 @@ const DeleteAlert = ({
       setDeleting(true);
       await notesApi.destroy(selectedNoteId);
       onClose();
-      setSelectedNoteId();
+      setSelectedNoteId(0);
       refetch();
     } catch (error) {
       logger.error(error);

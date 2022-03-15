@@ -16,7 +16,7 @@ const DeleteAlert = ({
       prevContacts.filter(contact => contact.id !== selectedContactId)
     );
     Toastr.success("Contact deleted succesfully");
-    setSelectedContactId();
+    setSelectedContactId(0);
     setDeleting(false);
     onClose();
   };
