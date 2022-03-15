@@ -6,10 +6,10 @@ import { MenuVertical } from "neetoicons";
 import StatusText from "./StatusText";
 import { randomStatus } from "./utils";
 
-const Item = ({ note, editHandler }) => (
+const Item = ({ note, editHandler, deleteHandler }) => (
   <div className="neeto-ui-shadow-s mb-4 border p-4">
     <div className="flex justify-between border-b">
-      <div>
+      <div className="my-1">
         <Typography style="h4">{note.title}</Typography>
         <Typography
           style="body3"
@@ -20,7 +20,7 @@ const Item = ({ note, editHandler }) => (
       </div>
       <Dropdown buttonStyle="text" position="bottom-end" icon={MenuVertical}>
         <li onClick={() => editHandler(note)}>Edit</li>
-        <li>Delete</li>
+        <li onClick={() => deleteHandler(note.id)}>Delete</li>
       </Dropdown>
     </div>
     <div className="mt-4 flex justify-between">

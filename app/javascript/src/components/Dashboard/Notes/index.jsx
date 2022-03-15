@@ -18,7 +18,7 @@ const Notes = () => {
   const [showNewNotePane, setShowNewNotePane] = useState(false);
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedNoteIds, setSelectedNoteIds] = useState([]);
+  const [selectedNoteId, setSelectedNoteId] = useState();
   const [notes, setNotes] = useState([]);
   const [showEditNote, setShowEditNote] = useState(false);
   const [selectedNote, setSelectedNote] = useState({});
@@ -44,6 +44,11 @@ const Notes = () => {
     setShowEditNote(true);
   };
 
+  const deleteHandler = id => {
+    setSelectedNoteId(id);
+    setShowDeleteAlert(true);
+  };
+
   if (loading) {
     return <PageLoader />;
   }
@@ -67,7 +72,11 @@ const Notes = () => {
           }}
         />
         {notes.length ? (
-          <Items notes={notes} editHandler={editHandler} />
+          <Items
+            notes={notes}
+            editHandler={editHandler}
+            deleteHandler={deleteHandler}
+          />
         ) : (
           <EmptyState
             image={EmptyNotesListImage}
@@ -90,10 +99,10 @@ const Notes = () => {
         />
         {showDeleteAlert && (
           <DeleteAlert
-            selectedNoteIds={selectedNoteIds}
+            selectedNoteId={selectedNoteId}
             onClose={() => setShowDeleteAlert(false)}
             refetch={fetchNotes}
-            setSelectedNoteIds={setSelectedNoteIds}
+            setSelectedNoteId={setSelectedNoteId}
           />
         )}
       </Container>
