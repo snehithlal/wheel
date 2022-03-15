@@ -22,6 +22,7 @@ const Notes = () => {
   const [notes, setNotes] = useState([]);
   const [showEditNote, setShowEditNote] = useState(false);
   const [selectedNote, setSelectedNote] = useState({});
+  const [showMenubar, setShowMenubar] = useState(true);
 
   useEffect(() => {
     fetchNotes();
@@ -55,10 +56,10 @@ const Notes = () => {
 
   return (
     <>
-      <Menubar />
+      <Menubar showMenubar={showMenubar} />
       <Container>
         <Header
-          title="Notes"
+          title="All Notes"
           actionBlock={
             <Button
               onClick={() => setShowNewNotePane(true)}
@@ -70,6 +71,7 @@ const Notes = () => {
             value: searchTerm,
             onChange: e => setSearchTerm(e.target.value),
           }}
+          menuBarToggle={() => setShowMenubar(prevValue => !prevValue)}
         />
         {notes.length ? (
           <Items
