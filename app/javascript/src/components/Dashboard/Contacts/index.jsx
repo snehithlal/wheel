@@ -6,6 +6,8 @@ import { Container, Header } from "neetoui/layouts";
 import { CONTACTS } from "./constants";
 import DeleteAlert from "./DeleteAlert";
 import Menubar from "./Menubar";
+import NewContactPane from "./Pane/Create";
+import EditContactPane from "./Pane/Edit";
 import Table from "./Table";
 
 const Contacts = () => {
@@ -13,11 +15,19 @@ const Contacts = () => {
   const [showMenubar, setShowMenuBar] = useState(true);
   const [contacts, setContacts] = useState(CONTACTS);
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
-  const [selectedContactId, setSelectedContactId] = useState();
+  const [selectedContactId, setSelectedContactId] = useState(0);
+  const [showNewPane, setShowNewPane] = useState(false);
+  const [showEditPane, setShowEditPane] = useState(false);
+  const [selectedContact, setSelectedContact] = useState({});
 
   const deleteHandler = id => {
     setSelectedContactId(id);
     setShowDeleteAlert(true);
+  };
+
+  const editHandler = contact => {
+    setSelectedContact(contact);
+    setShowEditPane(true);
   };
 
   return (
@@ -27,7 +37,11 @@ const Contacts = () => {
         <Header
           title="All Contacts"
           actionBlock={
-            <Button onClick={() => {}} label="Add Contact" icon="ri-add-line" />
+            <Button
+              onClick={() => setShowNewPane(true)}
+              label="Add Contact"
+              icon="ri-add-line"
+            />
           }
           searchProps={{
             value: searchTerm,
@@ -35,7 +49,22 @@ const Contacts = () => {
           }}
           menuBarToggle={() => setShowMenuBar(prevValue => !prevValue)}
         />
-        <Table contacts={contacts} deleteHandler={deleteHandler} />
+        <Table
+          contacts={contacts}
+          deleteHandler={deleteHandler}
+          editHandler={editHandler}
+        />
+        <NewContactPane
+          setContacts={setContacts}
+          showPane={showNewPane}
+          setShowPane={setShowNewPane}
+        />
+        <EditContactPane
+          contact={selectedContact}
+          setContacts={setContacts}
+          showPane={showEditPane}
+          setShowPane={setShowEditPane}
+        />
         {showDeleteAlert && (
           <DeleteAlert
             selectedContactId={selectedContactId}

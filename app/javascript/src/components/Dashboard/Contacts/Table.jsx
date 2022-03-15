@@ -6,7 +6,7 @@ import { Table as NeetoUITable, Dropdown } from "neetoui";
 import { PAGE_SIZE } from "./constants";
 import NameAndRole from "./NameAndRole";
 
-const Table = ({ contacts, deleteHandler }) => {
+const Table = ({ contacts, deleteHandler, editHandler }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const contactTableColumnData = [
@@ -37,7 +37,7 @@ const Table = ({ contacts, deleteHandler }) => {
           strategy="fixed"
           trigger="hover"
         >
-          <li>Edit</li>
+          <li onClick={() => editHandler(contact)}>Edit</li>
           <li onClick={() => deleteHandler(contact.id)}>Delete</li>
         </Dropdown>
       ),
