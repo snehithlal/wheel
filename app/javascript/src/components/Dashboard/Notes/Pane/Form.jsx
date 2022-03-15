@@ -54,9 +54,8 @@ export default function NoteForm({ onClose, refetch, note, isEdit }) {
             />
             <Select
               required
-              isMulti
               label="Assigned Contact"
-              name="assigned_contacts"
+              name="assigned_contact"
               placeholder="Select Role"
               className="w-full flex-grow-0"
               options={ASSIGNED_CONTACT_OPTIONS}
