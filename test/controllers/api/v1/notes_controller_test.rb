@@ -50,6 +50,15 @@ class Api::V1::NotesControllerTest < ActionDispatch::IntegrationTest
     assert_equal response_body["error"], "Description can't be blank"
   end
 
+  def test_destroy_note
+    assert_difference "@admin.notes.count", -1 do
+      delete api_v1_note_path(@notes.first), headers: @headers
+    end
+
+    assert_response :success
+    assert_equal response_body["notice"], t("successfully_deleted", count: 1, entity: "Note")
+  end
+
   def test_delete_single_note
     assert_difference "@admin.notes.count", -1 do
       post bulk_delete_api_v1_notes_path, params: { ids: [@notes.first.id] }, headers: @headers
