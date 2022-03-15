@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { Formik, Form } from "formik";
 import { Check } from "neetoicons";
-import { Button, Pane } from "neetoui";
+import { Button, Pane, Toastr } from "neetoui";
 import { Input, Select } from "neetoui/formik";
 
 import { CONTACT_VALIDATION_SCHEMA, ROLE_OPTIONS } from "./constants";
@@ -26,6 +26,7 @@ const ContactForm = ({ onClose, setContacts, contact, isEdit = false }) => {
     } else {
       setContacts(prevContacts => [...prevContacts, contactDetails]);
     }
+    Toastr.success(`Contact ${isEdit ? "Edited" : "Created"} Successfully`);
     onClose();
   };
 
